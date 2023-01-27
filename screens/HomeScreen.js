@@ -5,88 +5,11 @@ import { colors } from '../theme'
 import EmptyList from '../components/emptyList'
 import { useNavigation } from '@react-navigation/native'
 import randomImage from '../assets/images/randomImage'
-const items=[
-  {
-    id: 1,
-    image: randomImage(),
-    place: 'Islamabad',
-    country: 'Pakistan'
-  },
-  {
-    id: 2,
-    image: randomImage(),
-    place: 'Lahore',
-    country: 'Pakistan'
-  },
-  // {
-  //   id: 3,
-  //   image: randomImage(),
-  //   place: 'Karachi',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 4,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 5,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 6,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 7,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 8,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 9,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 10,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 11,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 12,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'Pakistan'
-  // },
-  // {
-  //   id: 13,
-  //   image: randomImage(),
-  //   place: 'Gujrat',
-  //   country: 'London'
-  // },
-]
+import { useSelector } from 'react-redux'
+
 export default function HomeScreen() {
   const navigation = useNavigation();
+  let trips = useSelector(state=> state.trip.trips);
   return (
     <ScreenWrapper className="flex-1">
       <View className="p-4 mb-4 pb-0 flex-row justify-between items-center">
@@ -102,20 +25,20 @@ export default function HomeScreen() {
         <Text className={`${colors.heading} font-bold text-xl `}>Recent Trips</Text>
         <View className="" style={{height: 430}}>
           <FlatList
-            data={items}
+            data={trips}
             showsVerticalScrollIndicator={false}
             scrollEnabled={true}
             numColumns={2}
-            ListEmptyComponent={<EmptyList />}
+            ListEmptyComponent={<EmptyList message="You haven't recorded any trips yet!" />}
             columnWrapperStyle={{
               justifyContent: 'space-between'
             }}
             className="mx-1"
             renderItem={({item}) => {
               return (
-                  <TouchableOpacity onPress={()=> navigation.navigate('tripExpenses')} className="shadow-sm bg-white p-3 mb-3 rounded-2xl">
+                  <TouchableOpacity onPress={()=> navigation.navigate('tripExpenses', {...item})} className="shadow-sm bg-white p-3 mb-3 rounded-2xl">
                     <View>
-                      <Image className=" w-36 h-36 mb-2" source={item.image} />
+                      <Image className=" w-36 h-36 mb-2" source={randomImage()} />
                       
                       <Text className={`font-bold ${colors.heading}`}>{item.place}</Text>
                       <Text className={`text-xs ${colors.heading}`}>{item.country}</Text>

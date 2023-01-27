@@ -17,6 +17,5 @@ export default function randomImage (){
     let min = 1;
     let max = 12;
     let random = Math.floor(Math.random() * (max - min + 1)) + min;
-    // console.log('got random number: ',randomNumber);
    return images[random+''];
 }
